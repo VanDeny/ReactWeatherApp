@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {StyleSheet} from 'react-native';
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import mainScreen from "../screens/mainScreen";
 import locationListScreen from "../screens/locationListScreen";
@@ -7,7 +8,7 @@ import searchScreen from "../screens/searchScreen";
 
 const Drawer = createDrawerNavigator();
 
-export default function drawer() {
+export default function DrawerNavigation() {
     return (
             <Drawer.Navigator initialRouteName="Home">
                 <Drawer.Screen name="Home" component={mainScreen} />
@@ -16,3 +17,7 @@ export default function drawer() {
             </Drawer.Navigator>
     );
 }
+
+const styles = StyleSheet.create({
+
+})

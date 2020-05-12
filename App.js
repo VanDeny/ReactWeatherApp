@@ -1,18 +1,16 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createAppContainer,  } from 'react-navigation';
-import {createStackNavigator} from "react-navigation-stack";
+import React from 'react';
+import { StyleSheet } from 'react-native';
 
-import mainScreen from "./src/screens/mainScreen";
+import {NavigationContainer} from "@react-navigation/native";
+import DrawerNavigation from "./src/components/drawer";
 
-  const navigator = createStackNavigator({
-    main: mainScreen
-  },
-      {
-        initialRouteName: 'main',
-        defaultNavigationOptions: {
-          title: ''
-        }
-      });
 
-export default createAppContainer(navigator);
+export default function App() {
+    return (
+        <NavigationContainer>
+            <DrawerNavigation/>
+        </NavigationContainer>
+    )
+}
+
+const styles = StyleSheet.create({});
