@@ -1,16 +1,27 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 
-import {NavigationContainer} from "@react-navigation/native";
-import DrawerNavigation from "./src/components/drawer";
+import Geocoder from 'react-native-geocoding';
+import { createDrawerNavigator  } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
 
+import forecastScreen from './src/screens/forecastScreen'
+import listOfCitiesScreen from './src/screens/forecastScreen'
+import searchScreen from './src/screens/forecastScreen'
+
+Geocoder.init('AIzaSyC5QtVetrDWZ89XJCV-kz40cC3bCwEKNro');
+
+const Drawer = createDrawerNavigator();
 
 export default function App() {
     return (
         <NavigationContainer>
-            <DrawerNavigation/>
+            <Drawer.Navigator>
+                <Drawer.Screen name="Forecast" component={forecastScreen} />
+                <Drawer.Screen name="List of Cities" component={listOfCitiesScreen} />
+                <Drawer.Screen name="Search" component={searchScreen} />
+            </Drawer.Navigator>
         </NavigationContainer>
-    )
+    );
 }
 
-const styles = StyleSheet.create({});
+
