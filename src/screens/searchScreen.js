@@ -1,10 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text, StyleSheet, TextInput, Button} from 'react-native';
+import * as Constants from "expo-constants";
 
-const searchScreen = ({ navigation }) => {
+const SearchScreen = ({navigation}) => {
+    const [location, setLocation] = useState('');
     return (
-        <View>
-            <Text>test</Text>
+        <View style={styles.view}>
+            <Text style={styles.text}>location</Text>
+            <TextInput style={styles.textInput}
+                       value={location}
+                       placeholder='Search'
+                       onSubmitEditing={(text) => {
+                           setLocation(text);
+                           navigation.navigate('Forecast');
+                       }}/>
         </View>
     )
 };
@@ -37,4 +46,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default searchScreen;
+export default SearchScreen;
