@@ -18,7 +18,6 @@ const SearchScreen = props => {
                            onChangeText={(text) => {
                                setTmp(text);
                            }}/>
-                <Text>{tmp}</Text>
                 <View style={styles.buttonView}>
                     <Button
                         title='Search'
@@ -57,7 +56,8 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         height: 50,
         fontSize: 30,
-        borderRadius: 20
+        borderRadius: 20,
+        color: '#fff'
     },
     container: {
         flexDirection: 'row',
