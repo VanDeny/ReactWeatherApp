@@ -9,9 +9,8 @@ export function getCurrentLocation(setLocation) {
             Geocoder.geocodePosition(pos)
                 .then(data => data.json()
                     .then((json)=> {
-                    console.log("success");
                 setLocation(json.locality);}))
     },
         (error) =>
-            console.log(error))
+        {})
 }

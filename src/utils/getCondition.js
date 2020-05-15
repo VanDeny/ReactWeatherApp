@@ -6,7 +6,6 @@ export async function getCondition (city, setWeather) {
             response.json()
                 .then((data) => {
                     setWeather(data.weather[0].main);
-                    console.log(data.weather[0].main);
                 });
         })
         .catch(error => {})}

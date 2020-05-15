@@ -20,7 +20,6 @@ const ForecastScreen = ({navigation}) => {
         getWeather(location, setTemperature);},
         [location]);
 
-    console.log(weather);
 
     return (
         <View style={[styles.container, {backgroundColor: weatherConditions[weather].color}]}>
