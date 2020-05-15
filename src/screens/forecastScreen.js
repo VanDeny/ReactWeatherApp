@@ -1,47 +1,64 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import * as Constants from "expo-constants";
-import { FontAwesome } from '@expo/vector-icons';
-import { getWeather } from "../utils/getWeather";
-import { getCurrentLocation } from "../utils/getCurrentLocation";
+import {FontAwesome, MaterialCommunityIcons} from '@expo/vector-icons';
+import {getWeather} from "../utils/getWeather";
+import {getCurrentLocation} from "../utils/getCurrentLocation";
+import { weatherConditions } from './../utils/weatherConditions';
+import {getCondition} from "../utils/getCondition";
 
-const ForecastScreen =  ({navigation}) => {
+const ForecastScreen = ({navigation}) => {
 
-    const [location, setLocation] = useState('Praha')
+    const [location, setLocation] = useState('Praha');
     const [temperature, setTemperature] = useState('0');
+    const [weather, setWeather] = useState('Clouds');
 
     // useEffect(() => getCurrentLocation(),[]);
-    useEffect(() => {getWeather(location, setTemperature)},[location]);
-    useEffect(() => {navigation.setParams({setLocation: setLocation()})}, []);
+    useEffect(() => {navigation.setParams({location: location, setLocation: setLocation, color: weather})}, [location]);
+    useEffect(() => {
+        getCondition(location, setWeather);
+        getWeather(location, setTemperature);},
+        [location]);
+
+    console.log(weather);
 
     return (
-        <View style={styles.view}>
-            <Text style={styles.text}>test</Text>
-            {location !== undefined ? <Text style={styles.text}>{location} temp is {temperature}</Text> : <Text style={styles.text}>Undefined</Text>}
+        <View style={[styles.container, {backgroundColor: weatherConditions[weather].color}]}>
+            <View style={styles.header}>
+                <MaterialCommunityIcons size={80} name={weatherConditions[weather].icon} color={'#fff'} />
+                <Text style={styles.text} >{location} </Text>
+            </View>
+            <View style={styles.temperatureContainer}>
+                <Text style={styles.temperature}>{temperature} °C</Text>
+            </View>
         </View>
     )
 };
 
-ForecastScreen.navigationOptions = ({ navigation }) => {
+ForecastScreen.navigationOptions = props => {
     return {
         headerRight: () =>
             <TouchableOpacity
                 style={styles.fontAwesome}
                 onPress={() =>
-                    navigation.navigate('Search', navigation.getParam('setLocation'))}>
-                <FontAwesome style={styles.fontAwesome} name="search" size={30} color="black" />
+                    props.navigation.navigate('Search', {
+                        location: props.navigation.getParam('location'),
+                        setLocation: props.navigation.getParam('setLocation'),
+                        color: props.navigation.getParam('color')})}>
+                <FontAwesome style={styles.fontAwesome} name="search" size={30} color="black"/>
             </TouchableOpacity>
-            };
+    };
 };
 
 const styles = StyleSheet.create({
     text: {
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: 40,
+        color: '#fff'
     },
     view: {
         justifyContent: 'center',
-        paddingTop: Constants.statusBarHeight,
+        paddingTop: Constants.statusBarHeight
     },
     textInput: {
         margin: 10,
@@ -52,16 +69,27 @@ const styles = StyleSheet.create({
         borderRadius: 20
     },
     container: {
-        flexDirection: 'row',
-        justifyContent: 'space-around'
+        flex: 1
     },
-    button: {
-        flex: 1,
-        width: '40%',
-        height: 60
+    header: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1
     },
     fontAwesome: {
         margin: 10
+    },
+    temperature: {
+        textAlign: 'center',
+        fontSize: 60,
+        color: '#fff'
+    },
+    temperatureContainer: {
+        flex: 2,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-end',
+        paddingRight: 20,
+        marginBottom: 40
     }
 });
 
