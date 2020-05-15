@@ -1,15 +1,16 @@
-import Geocoder from 'react-native-geocoding';
-import Geolocation from 'react-native-geolocation-service';
+import Geocoder from 'react-native-geocoder';
 
-
-export function getCurrentLocation() {
-    Geolocation.getCurrentPosition((position) => {
-        console.log(position);
-        Geocoder.from(position.coords.latitude, position.coords.longitude).then(
-            (json) => {
-                const address = json.results[0].address_components[0];
-                console.log(address)
-            })
+export function getCurrentLocation(setLocation) {
+     navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const pos = {lat: lat, lng: lon};
+            Geocoder.geocodePosition(pos)
+                .then(data => data.json()
+                    .then((json)=> {
+                    console.log("success");
+                setLocation(json.locality);}))
     },
         (error) =>
             console.log(error))

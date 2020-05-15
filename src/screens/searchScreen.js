@@ -2,18 +2,22 @@ import React, {useState} from 'react';
 import { View, Text, StyleSheet, TextInput, Button} from 'react-native';
 import * as Constants from "expo-constants";
 
-const SearchScreen = ({navigation}) => {
-    const [location, setLocation] = useState('');
+const SearchScreen = ({navigation}, {setLocation}) => {
+    const [location, setL] = useState('');
     return (
         <View style={styles.view}>
             <Text style={styles.text}>location</Text>
             <TextInput style={styles.textInput}
                        value={location}
                        placeholder='Search'
-                       onSubmitEditing={(text) => {
-                           setLocation(text);
-                           navigation.navigate('Forecast');
+                       onChangeText={(text) => {
+                           setL(text);
                        }}/>
+                       <Text>{location}</Text>
+                       <Button
+                            title='Search'
+                           onPress={() => { setLocation(location);
+                               navigation.navigate('Forecast')}}/>
         </View>
     )
 };

@@ -4,21 +4,20 @@ import * as Constants from "expo-constants";
 import { FontAwesome } from '@expo/vector-icons';
 import { getWeather } from "../utils/getWeather";
 import { getCurrentLocation } from "../utils/getCurrentLocation";
-import {getActiveChildNavigationOptions} from "react-navigation";
 
 const ForecastScreen =  ({navigation}) => {
 
     const [location, setLocation] = useState('Praha')
     const [temperature, setTemperature] = useState('0');
 
+    // useEffect(() => getCurrentLocation(),[]);
     useEffect(() => {getWeather(location, setTemperature)},[location]);
-    useEffect(() => getCurrentLocation(),[]);
-    useEffect(() => { navigation.setParams({setLoc: setLocation})})
+    useEffect(() => {navigation.setParams({setLocation: setLocation()})}, []);
 
     return (
         <View style={styles.view}>
-            <Text style={styles.text}></Text>
-            {location != undefined ? <Text style={styles.text}>{location} temp is {temperature}</Text> : <Text style={styles.text}>Undefined</Text>}
+            <Text style={styles.text}>test</Text>
+            {location !== undefined ? <Text style={styles.text}>{location} temp is {temperature}</Text> : <Text style={styles.text}>Undefined</Text>}
         </View>
     )
 };
@@ -29,7 +28,7 @@ ForecastScreen.navigationOptions = ({ navigation }) => {
             <TouchableOpacity
                 style={styles.fontAwesome}
                 onPress={() =>
-                    navigation.navigate('Search')}>
+                    navigation.navigate('Search', navigation.getParam('setLocation'))}>
                 <FontAwesome style={styles.fontAwesome} name="search" size={30} color="black" />
             </TouchableOpacity>
             };
