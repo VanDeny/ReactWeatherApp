@@ -13,7 +13,7 @@ const ForecastScreen = ({navigation}) => {
     const [temperature, setTemperature] = useState('0');
     const [weather, setWeather] = useState('Clouds');
 
-    // useEffect(() => getCurrentLocation(),[]);
+    useEffect(() => getCurrentLocation(),[]);
     useEffect(() => {navigation.setParams({location: location, setLocation: setLocation, color: weather})}, [location]);
     useEffect(() => {
         getCondition(location, setWeather);

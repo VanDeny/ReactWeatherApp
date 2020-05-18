@@ -5,11 +5,12 @@ export function getCurrentLocation(setLocation) {
         (position) => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
+            // console.log('Lat: ' + lat + ', Long: ' + lon);
             const pos = {lat: lat, lng: lon};
             Geocoder.geocodePosition(pos)
-                .then(data => data.json()
-                    .then((json)=> {
-                setLocation(json.locality);}))
+                .then(data => {
+                    console.log(data);
+                })
     },
         (error) =>
         {})
